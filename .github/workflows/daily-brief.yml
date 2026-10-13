@@ -21,6 +21,9 @@ concurrency:
   group: daily-brief-${{ github.ref }}
   cancel-in-progress: false
 
+permissions:
+  contents: read
+
 jobs:
   briefing-pipeline:
     runs-on: ubuntu-latest
