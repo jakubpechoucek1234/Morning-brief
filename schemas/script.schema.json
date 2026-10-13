@@ -1,0 +1,98 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://morning-brief.local/schemas/script.schema.json",
+  "title": "MorningBriefScript",
+  "description": "Validation schema for the Morning Brief spoken narration script",
+  "type": "object",
+  "required": [
+    "date",
+    "title",
+    "sections",
+    "sources",
+    "word_count_estimate"
+  ],
+  "properties": {
+    "date": {
+      "type": "string",
+      "description": "Target briefing date in YYYY-MM-DD format",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+    },
+    "title": {
+      "type": "string",
+      "description": "Episode title (e.g., Morning Brief - 2026-10-13)"
+    },
+    "target_duration_seconds": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Planned episode duration in seconds (target 420-480 seconds)"
+    },
+    "word_count_estimate": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Estimated total word count across all narration sections"
+    },
+    "sources": {
+      "type": "array",
+      "description": "List of source citations or URLs referenced in this episode",
+      "items": {
+        "type": "string"
+      }
+    },
+    "sections": {
+      "type": "array",
+      "description": "Ordered narration sections for the briefing",
+      "items": {
+        "type": "object",
+        "required": [
+          "name",
+          "duration_target_seconds",
+          "text",
+          "items"
+        ],
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Section title (e.g. Markets Snapshot, Fed & BSP Updates)"
+          },
+          "duration_target_seconds": {
+            "type": "integer",
+            "minimum": 0,
+            "description": "Target duration for this section in seconds"
+          },
+          "text": {
+            "type": "string",
+            "description": "Spoken narration script text for TTS voice synthesis"
+          },
+          "items": {
+            "type": "array",
+            "description": "Story items covered in this section",
+            "items": {
+              "type": "object",
+              "required": [
+                "headline",
+                "source"
+              ],
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "headline": {
+                  "type": "string"
+                },
+                "source": {
+                  "type": "string"
+                },
+                "url": {
+                  "type": "string"
+                }
+              },
+              "additionalProperties": true
+            }
+          }
+        },
+        "additionalProperties": true
+      }
+    }
+  },
+  "additionalProperties": true
+}
