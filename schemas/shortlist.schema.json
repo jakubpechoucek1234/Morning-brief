@@ -1,0 +1,118 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://morning-brief.local/schemas/shortlist.schema.json",
+  "title": "MorningBriefShortlist",
+  "description": "Validation schema for candidate story rankings and episode shortlist",
+  "type": "object",
+  "required": [
+    "generated_at",
+    "sections",
+    "rejected_items"
+  ],
+  "properties": {
+    "generated_at": {
+      "type": "string",
+      "description": "ISO 8601 timestamp when shortlist was generated"
+    },
+    "date": {
+      "type": "string",
+      "description": "Target briefing date in YYYY-MM-DD format"
+    },
+    "sections": {
+      "type": "array",
+      "description": "Selected candidate items grouped per episode section",
+      "items": {
+        "type": "object",
+        "required": [
+          "section_name",
+          "selected_items"
+        ],
+        "properties": {
+          "section_name": {
+            "type": "string",
+            "description": "Unique key or name of the briefing section"
+          },
+          "target_item_count": {
+            "type": "integer",
+            "minimum": 0,
+            "description": "Target number of items to narrate for this section"
+          },
+          "selected_items": {
+            "type": "array",
+            "description": "Candidate news items selected for inclusion",
+            "items": {
+              "type": "object",
+              "required": [
+                "id",
+                "headline",
+                "source",
+                "url"
+              ],
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "headline": {
+                  "type": "string"
+                },
+                "summary": {
+                  "type": "string"
+                },
+                "source": {
+                  "type": "string"
+                },
+                "url": {
+                  "type": "string"
+                },
+                "score": {
+                  "type": "number"
+                },
+                "published_at": {
+                  "type": "string"
+                }
+              },
+              "additionalProperties": true
+            }
+          }
+        },
+        "additionalProperties": true
+      }
+    },
+    "rejected_items": {
+      "type": "array",
+      "description": "Candidate items excluded during deduplication or ranking with documented reasons",
+      "items": {
+        "type": "object",
+        "required": [
+          "headline",
+          "source",
+          "reason"
+        ],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "headline": {
+            "type": "string"
+          },
+          "source": {
+            "type": "string"
+          },
+          "url": {
+            "type": "string"
+          },
+          "reason": {
+            "type": "string",
+            "description": "Explicit reason why story was omitted (e.g. duplicate, stale_window, low_score, section_overflow)"
+          },
+          "stage": {
+            "type": "string",
+            "description": "Pipeline stage where exclusion occurred (e.g. deduplication, ranking, allocation)"
+          }
+        },
+        "additionalProperties": true
+      }
+    }
+  },
+  "additionalProperties": true
+}

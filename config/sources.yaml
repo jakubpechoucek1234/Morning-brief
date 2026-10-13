@@ -1,0 +1,130 @@
+# ==============================================================================
+# Morning Brief Starter Sources Configuration
+# ==============================================================================
+# This file defines the trusted news and intelligence feeds monitored by the
+# automated daily briefing pipeline.
+#
+# Required fields per entry:
+#   name:               Human-readable name of the outlet / publication
+#   type:               Ingestion connector type ('rss', 'api', or 'web')
+#   url:                Endpoint or feed URL
+#   region:             Geographic scope ('global', 'US', 'Philippines', 'India')
+#   topic:              Content category:
+#                         - 'markets'          (Equities, bonds, FX, commodities)
+#                         - 'central_bank'     (Fed, BSP, policy decisions)
+#                         - 'big_tech'         (AI, platforms, developer ecosystems)
+#                         - 'philippines_focus'(Philippine economy & national news)
+#                         - 'india_focus'      (Indian economy, tech & industry)
+#                         - 'world_news'       (Geopolitics & global headlines)
+#   priority:           Integer rank (1 = highest priority, 2 = secondary)
+#   poll_window_hours:  Lookback window in hours for candidate stories
+# ==============================================================================
+
+version: "1.0"
+
+sources:
+  # ----------------------------------------------------------------------------
+  # 1. Markets / Business
+  # ----------------------------------------------------------------------------
+  - name: "Reuters Business & Financial Markets"
+    type: "rss"
+    url: "https://www.reutersagency.com/feed/?best-topics=business-finance&post_type=best"
+    region: "global"
+    topic: "markets"
+    priority: 1
+    poll_window_hours: 24
+
+  - name: "Wall Street Journal Markets"
+    type: "rss"
+    url: "https://feeds.a.dj.com/rss/RSSMarketsMain.xml"
+    region: "US"
+    topic: "markets"
+    priority: 2
+    poll_window_hours: 24
+
+  # ----------------------------------------------------------------------------
+  # 2. Central Bank / Policy (Fed, BSP)
+  # ----------------------------------------------------------------------------
+  - name: "Federal Reserve Board Press Releases"
+    type: "rss"
+    url: "https://www.federalreserve.gov/feeds/press_all.xml"
+    region: "US"
+    topic: "central_bank"
+    priority: 1
+    poll_window_hours: 48
+
+  - name: "Bangko Sentral ng Pilipinas Media Releases"
+    type: "web"
+    url: "https://www.bsp.gov.ph/SitePages/MediaAndResearch/MediaReleases.aspx"
+    region: "Philippines"
+    topic: "central_bank"
+    priority: 1
+    poll_window_hours: 48
+
+  # ----------------------------------------------------------------------------
+  # 3. Big Tech
+  # ----------------------------------------------------------------------------
+  - name: "TechCrunch"
+    type: "rss"
+    url: "https://techcrunch.com/feed/"
+    region: "global"
+    topic: "big_tech"
+    priority: 1
+    poll_window_hours: 24
+
+  - name: "Ars Technica"
+    type: "rss"
+    url: "https://feeds.arstechnica.com/arstechnica/index"
+    region: "global"
+    topic: "big_tech"
+    priority: 2
+    poll_window_hours: 24
+
+  # ----------------------------------------------------------------------------
+  # 4. Philippines Focus
+  # ----------------------------------------------------------------------------
+  - name: "Philippine News Agency Business"
+    type: "rss"
+    url: "https://www.pna.gov.ph/rss/business"
+    region: "Philippines"
+    topic: "philippines_focus"
+    priority: 1
+    poll_window_hours: 24
+
+  - name: "Inquirer.net Business"
+    type: "rss"
+    url: "https://business.inquirer.net/feed"
+    region: "Philippines"
+    topic: "philippines_focus"
+    priority: 2
+    poll_window_hours: 24
+
+  # ----------------------------------------------------------------------------
+  # 5. India Focus
+  # ----------------------------------------------------------------------------
+  - name: "The Economic Times India"
+    type: "rss"
+    url: "https://economictimes.indiatimes.com/rssfeedstopstories.cms"
+    region: "India"
+    topic: "india_focus"
+    priority: 1
+    poll_window_hours: 24
+
+  - name: "Livemint Economy & Policy"
+    type: "rss"
+    url: "https://www.livemint.com/rss/economy"
+    region: "India"
+    topic: "india_focus"
+    priority: 2
+    poll_window_hours: 24
+
+  # ----------------------------------------------------------------------------
+  # 6. World News
+  # ----------------------------------------------------------------------------
+  - name: "BBC News World Edition"
+    type: "rss"
+    url: "https://feeds.bbci.co.uk/news/world/rss.xml"
+    region: "global"
+    topic: "world_news"
+    priority: 1
+    poll_window_hours: 24
